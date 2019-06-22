@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>gfx/about.png</file>
+        <file>gfx/add.png</file>
+        <file>gfx/connect.png</file>
+        <file>gfx/history.png</file>
+        <file>gfx/print.png</file>
+        <file>gfx/query.png</file>
+        <file>gfx/quit.png</file>
+        <file>gfx/save.png</file>
+        <file>gfx/settings.png</file>
+        <file>gfx/app.png</file>
+    </qresource>
+</RCC>

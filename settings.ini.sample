@@ -1,0 +1,3 @@
+[database]
+#Database filename
+name=/home/sample/sample.db

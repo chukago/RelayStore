@@ -1,0 +1,83 @@
+1. База данных relay_store
+
+1.1. Таблица user 
+
+Данные для авторизации пользователя.
+
+user(
+	id INT(16) AUTO_INCREMENT,				// идентификатор
+	login VARCHAR(16) NOT NULL UNIQUE,		// логин пользователя
+	passwd VARCHAR(16) NOT NULL,			// пароль пользователя
+	name VARCHAR(16) NOT NULL,				// имя пользователя
+	sirname VARCHAR(16) NOT NULL,			// фамилия пользователя
+	position VARCHAR(256) NOT NULL,			// должность
+	rights INT(16) NOT NULL,					// права доступа
+	PRIMARY KEY(id)
+);
+
+1.2. Таблица relay
+
+Таблица описаний типов реле.
+
+relay(
+	id INT(16) AUTO_INCREMENT,				// идентификатор
+	type VARCHAR(32) NOT NULL UNIQUE,		// тип реле
+	check_period INT(16) NOT NULL,			// период проверки
+	PRIMARY KEY(id)
+);
+
+1.3. Таблица stations
+
+Таблица наименования станций.
+
+stations(
+	id INT(16) AUTO_INCREMENT,
+	station VARCHAR(32) NOT NULL UNIQUE,
+	PRIMARY KEY(id)
+);
+
+1.4. Таблица status
+
+Таблица описания статусов реле.
+
+status(
+	id INT(16) AUTO_INCREMENT,
+	status VARCHAR(32) NOT NULL UNIQUE,
+	PRIMARY KEY(id)
+);
+
+1.5 Таблица store
+
+Таблица фактически существующих реле на дистанции.
+
+store(
+	id INT(16) AUTO_INCREMENT,
+	type INT(16) NOT NULL,
+	check_period INT(16) NOT NULL,
+	serial_number VARCHAR(32) NOT NULL,
+	manufactured INT(16) NOT NULL,
+	station INT(16) NOT NULL,
+	relay_rack VARCHAR(32) NOT NULL,
+	device_number INT(16) NOT NULL,
+	last_check INT(16) NOT NULL,
+	status INT(16) NOT NULL,
+	comment VARCHAR(256),
+	PRIMARY KEY(id)
+);
+
+1.6 Таблица history
+
+Таблица истории изменений в базе данных.
+
+history{
+	id INT(16) AUTO_INCREMENT,
+	date INT(16) NOT NULL,
+	station INT(16) NOT NULL,
+	relay_rack VARCHAR(32) NOT NULL,
+	device_number INT(16) NOT NULL,
+	last_check INT(16) NOT NULL,
+	status INT(16) NOT NULL,
+	comment VARCHAR(256),
+	owner INT(16) NOT NULL,
+	PRIMARY KEY(id)
+};

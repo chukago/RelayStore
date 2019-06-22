@@ -1,0 +1,40 @@
+1. Взаимодействие с базой данных
+
+Переменные mysql:
+	
+	character_set_client		utf8
+	character_set_connection	utf8
+	character_set_database		utf8
+	character_set_filesystem		binary
+	character_set_results		utf8
+	character_set_server		latin1
+	character_set_system		utf8
+	character_sets_dir			/usr/share/mysql/charsets/
+
+Базу данных создавать следующим образом;
+
+	CREATE DATABASE имя_базы_данных CHARACTER SET 'имя_кодировки'
+
+(имя_кодировки можно выбрать из списка генерируемого запросм "SHOW CHARACTER SET")
+
+Перед выполнением запросов установить переменные (если не настроен my.cnf) и кодировку базы данных следующим образом;
+	
+	/* Переменные
+	SET character_set_client = имя_кодировки;
+	SET character_set_connection = имя_кодировки;
+	SET character_set_database = имя_кодировки;
+	SET character_set_results = имя_кодировки;
+	SET character_set_system = имя_кодировки;
+	*/
+	
+	/* База данных
+	SET NAMES имя_кодировки;
+	*/
+	
+Все строки в базу данных записывать пропуская через кодек
+
+	QSqlQuery query(db);
+	QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+	query.exec(codec->toUnicode("запрос с русскими литералами"));
+
+В этом случае данные можно запрашивать и использовать без преобразования!

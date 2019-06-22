@@ -131,7 +131,7 @@ void rs_query_dialog::next_check_before_enable(int state)
 
 void rs_query_dialog::request(void)
 {
-    findParam_t findParam = {0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, NULL};
+    findParam_t findParam = {0, 0, 0, nullptr, 0, 0, 0, 0, 0, 0, 0, nullptr};
 	
 	/*ИД*/
     //findParam.id			=	QVariant(_id_ed->text()).toInt();

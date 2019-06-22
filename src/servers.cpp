@@ -137,7 +137,7 @@ bool dbQueryServer::isConnected(void)
 
 userDesc_t dbQueryServer::addUser(userDesc_t userInfo)
 {
-	userDesc_t tempUserDesc = {0, NULL, NULL, NULL, NULL, NULL, 0};
+    userDesc_t tempUserDesc = {0, nullptr, nullptr, nullptr, nullptr, nullptr, 0};
 	QString _into;
 	QStringList _fields;
 	QStringList _fieldsValues;
@@ -158,7 +158,7 @@ userDesc_t dbQueryServer::addUser(userDesc_t userInfo)
 
 userDesc_t dbQueryServer::getUserInfo(QString login, QString passwd)
 {
-	userDesc_t tempUserDesc = {0, NULL, NULL, NULL, NULL, NULL, 0};
+    userDesc_t tempUserDesc = {0, nullptr, nullptr, nullptr, nullptr, nullptr, 0};
 	QVector<QString> args;
 	
 	args.push_back(login);
@@ -294,7 +294,7 @@ bool dbQueryServer::loadTypes(void)
 {
 	_types.clear();
 	
-	typeDesc_t tempTypeDesc = {0, NULL, 0};
+    typeDesc_t tempTypeDesc = {0, nullptr, 0};
 	
 	QStringList _select;
 	QString _from;
@@ -330,7 +330,7 @@ QVector<typeDesc_t> dbQueryServer::getTypes(void)
 
 typeDesc_t dbQueryServer::getTypeById(unsigned int id)
 {
-	typeDesc_t tempTypeDesc = {0, NULL, 0};
+    typeDesc_t tempTypeDesc = {0, nullptr, 0};
 	
 	if (_types.size() > 0){
 		for (int i = 0; i < _types.size(); i++){
@@ -346,7 +346,7 @@ typeDesc_t dbQueryServer::getTypeById(unsigned int id)
 
 typeDesc_t dbQueryServer::getTypeByName(QString type)
 {
-	typeDesc_t tempTypeDesc = {0, NULL, 0};
+    typeDesc_t tempTypeDesc = {0, nullptr, 0};
 	
 	if (_types.size() > 0){
 		for (int i = 0; i < _types.size(); i++){
@@ -364,7 +364,7 @@ bool dbQueryServer::loadStations(void)
 {
 	_stations.clear();
 	
-	stationDesc_t tempStationDesc = {0, NULL};
+    stationDesc_t tempStationDesc = {0, nullptr};
 	
 	QStringList _select;
 	QString _from;
@@ -395,7 +395,7 @@ QVector<stationDesc_t> dbQueryServer::getStations(void)
 
 stationDesc_t dbQueryServer::getStationById(unsigned int id)
 {
-	stationDesc_t tempStationDesc = {0, NULL};
+    stationDesc_t tempStationDesc = {0, nullptr};
 	
 	if (_stations.size() > 0){
 		for (int i = 0; i < _stations.size(); i++){
@@ -411,7 +411,7 @@ stationDesc_t dbQueryServer::getStationById(unsigned int id)
 
 stationDesc_t dbQueryServer::getStationByName(QString station)
 {
-	stationDesc_t tempStationDesc = {0, NULL};
+    stationDesc_t tempStationDesc = {0, nullptr};
 	
 	if (_stations.size() > 0){
 		for (int i = 0; i < _stations.size(); i++){
@@ -438,7 +438,7 @@ bool dbQueryServer::loadStatuses(void)
 	_select << "*";
 	_from = "status";
 	
-	statusDesc_t tempStatusDesc = {0, NULL};
+    statusDesc_t tempStatusDesc = {0, nullptr};
 	
 	if (_query->exec(queries::genSelectQuery(_select, _from))){
 		
@@ -461,7 +461,7 @@ QVector<statusDesc_t> dbQueryServer::getStatuses(void)
 
 statusDesc_t dbQueryServer::getStatusById(unsigned int id)
 {
-	statusDesc_t tempStatusDesc = {0, NULL};
+    statusDesc_t tempStatusDesc = {0, nullptr};
 	
 	if (_statuses.size() > 0){
 		for (int i = 0; i < _statuses.size(); i++){
@@ -477,7 +477,7 @@ statusDesc_t dbQueryServer::getStatusById(unsigned int id)
 
 statusDesc_t dbQueryServer::getStatusByName(QString status)
 {
-	statusDesc_t tempStatusDesc = {0, NULL};
+    statusDesc_t tempStatusDesc = {0, nullptr};
 	
 	if (_statuses.size() > 0){
 		for (int i = 0; i < _statuses.size(); i++){
@@ -494,7 +494,7 @@ statusDesc_t dbQueryServer::getStatusByName(QString status)
 QVector<relayDesc_t> dbQueryServer::findRelay(findParam_t findParam, bool addToBuffer, bool sort)
 {
 	QVector<relayDesc_t> res;
-	relayDesc_t tempRelayDesc = {0, 0, NULL, 0, 0, 0, 0, 0, 0, NULL};
+    relayDesc_t tempRelayDesc = {0, 0, nullptr, 0, 0, 0, 0, 0, 0, nullptr};
 	QStringList _select;
 	QString _from;
 	QStringList _where;
@@ -592,7 +592,7 @@ QVector<relayDesc_t> dbQueryServer::findRelay(findParam_t findParam, bool addToB
                         if (((findParam.before_date !=0) || (findParam.from_date !=0))){
 
                             QRegExp re("\\((\\d+)\\).*$");
-                            int _check_period;
+                            uint _check_period;
                             int pos=re.indexIn(tempRelayDesc.comment, 0);
                             if (pos != -1){
                                 _check_period = re.cap(1).toUInt();
@@ -602,7 +602,7 @@ QVector<relayDesc_t> dbQueryServer::findRelay(findParam_t findParam, bool addToB
                             };
 
                             QDateTime _dt = QDateTime::fromTime_t(tempRelayDesc.last_check);
-                            _dt = _dt.addYears(_check_period);
+                            _dt = _dt.addYears(static_cast<int>(_check_period));
                             if (_check_period != 0){
 				if ((findParam.before_date != 0) && (!(findParam.before_date >= _dt.toTime_t()))){
 				    continue;
@@ -635,7 +635,7 @@ QVector<relayDesc_t> dbQueryServer::getRelays(void)
 
 relayDesc_t dbQueryServer::getRelayById(unsigned int id)
 {
-	relayDesc_t tempRelayDesc = {0, 0, NULL, 0, 0, 0, 0, 0, 0, NULL};
+    relayDesc_t tempRelayDesc = {0, 0, nullptr, 0, 0, 0, 0, 0, 0, nullptr};
 	
 	for (int i = 0; i < _relays.size(); i++){
 		if (_relays[i].id == id){
@@ -659,7 +659,7 @@ void dbQueryServer::addRelayToBuffer(relayDesc_t relay)
 
 relayDesc_t dbQueryServer::getRelayFromBuffer(unsigned int id)
 {
-	relayDesc_t tempRelayDesc = {0, 0, NULL, 0, 0, 0, 0, 0, 0, NULL};
+    relayDesc_t tempRelayDesc = {0, 0, nullptr, 0, 0, 0, 0, 0, 0, nullptr};
 	for (int i = 0; i < _writeBuffer.size(); i++){
 		if (_writeBuffer[i].id == id){
 			tempRelayDesc = _writeBuffer[i];
@@ -683,7 +683,7 @@ void dbQueryServer::deleteRelayFromBuffer(unsigned int id)
 	};
 }
 
-int dbQueryServer::writeToDb(void)
+uint dbQueryServer::writeToDb(void)
 {
 	QString _table;
 	QStringList _fields;
@@ -748,7 +748,7 @@ int dbQueryServer::writeToDb(void)
 }
 
 // Сохраняет предыдущее состояние реле - "историю" реле
-int dbQueryServer::writeHistory(void)
+uint dbQueryServer::writeHistory(void)
 {
 	unsigned int res = 0;
 	QString _into;
@@ -794,7 +794,7 @@ int dbQueryServer::writeHistory(void)
  {
 	 _history.clear();
 	 QVector<historyDesc_t> res;
-         historyDesc_t tempHistoryDesc = {0, 0, 0, 0, 0, 0, 0, 0, NULL, 0};
+         historyDesc_t tempHistoryDesc = {0, 0, 0, 0, 0, 0, 0, 0, nullptr, 0};
 	
 	 QStringList _select;
 	 QString _from;

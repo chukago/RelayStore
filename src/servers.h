@@ -96,9 +96,9 @@ class dbQueryServer
 		/*Удаление реле из буффера*/
 		void deleteRelayFromBuffer(unsigned int id);
 		/*Запись из буфера в БД*/
-		int writeToDb(void);
+        uint writeToDb(void);
 		/*Запись истории*/
-		int writeHistory(void);
+        uint writeHistory(void);
 		
 		/*Поиск истории по идентификатору реле*/
 		QVector<historyDesc_t> findHistory(unsigned int id);

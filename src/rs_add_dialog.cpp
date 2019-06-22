@@ -185,7 +185,7 @@ void rs_add_dialog::check_errors(void)
 	
 	if ( _req_server->getTypeByName(_type_ed->currentText()).id){
                 // Проверка существования реле с заданным типом, датой производства и серийным номером
-        findParam_t findParam = {0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, NULL};
+        findParam_t findParam = {0, 0, 0, nullptr, 0, 0, 0, 0, 0, 0, 0, nullptr};
 		findParam.type = _req_server->getTypeByName(_type_ed->currentText()).id;
 		findParam.serial_number = _ser_num_ed->text();
                 findParam.manufactured = _manufactured_ed->dateTime().toTime_t();
@@ -248,7 +248,7 @@ void rs_add_dialog::check_errors(void)
 	
 	QDateTime intermediate;
 	QDateTime manufactured_dt, last_check_dt;
-    relayDesc_t relay = {0, 0, NULL, 0, 0, 0, 0, 0, 0, NULL};
+    relayDesc_t relay = {0, 0, nullptr, 0, 0, 0, 0, 0, 0, nullptr};
 	
 	relay.type = _req_server->getTypeByName(_type_ed->currentText()).id;
 	relay.serial_number = _ser_num_ed->text();
@@ -343,7 +343,7 @@ void rs_add_dialog::check_manufactured(QDate manufactured)
 void rs_add_dialog::check_last_check(QDate last_check)
 {
     if (_period_ed->text().toUInt()){
-        _next_check_ed->setText(last_check.addYears(QVariant(_period_ed->text()).toUInt()).toString("dd.MM.yyyy"));
+        _next_check_ed->setText(last_check.addYears(QVariant(_period_ed->text()).toInt()).toString("dd.MM.yyyy"));
     }
     else{
         _next_check_ed->setText("");

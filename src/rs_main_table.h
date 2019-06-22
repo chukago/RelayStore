@@ -62,7 +62,7 @@ class rs_main_table : public QTableWidget
 		void setConnections(void);
 		void _table_setup(void);
         void _write_table(void);
-        int _alt_check_period(relayDesc_t &relay);
+        uint _alt_check_period(relayDesc_t &relay);
         QBrush defaultBackground;
 	
     private slots:

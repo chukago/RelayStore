@@ -185,24 +185,30 @@ void rs_main_table::writeRow(int row, relayDesc_t relay)
 	_items[row].type->setText(_req_server->getTypeById(relay.type).type);
 	
     /*Период проверки*/
-    int _check_period;
-    if (_check_period = _alt_check_period(_currentRelay)) {
+
+    uint _check_period = _alt_check_period(_currentRelay);
+
+    if (_check_period != 0) {
 
         _items[row].check_period->setText(QVariant(_check_period).toString() + tr(" (альт.)"));
     }
-    else if (_check_period = _req_server->getTypeById(relay.type).checkPeriod) {
-
-        _items[row].check_period->setText(QVariant(_req_server->getTypeById(relay.type).checkPeriod).toString());
-    }
     else {
 
-        _items[row].check_period->setText(tr("Не проверяется"));
+        _check_period = _req_server->getTypeById(relay.type).checkPeriod;
+
+        if (_check_period != 0) {
+
+            _items[row].check_period->setText(QVariant(_req_server->getTypeById(relay.type).checkPeriod).toString());
+        }
+        else {
+
+            _items[row].check_period->setText(tr("Не проверяется"));
+        }
     }
 		
 	/*Серийный номер*/
 	_items[row].serial_number->setText(relay.serial_number);
 	
-    /*
     //Дата производства
 	if (relay.manufactured == 0){
 		_items[row].manufactured->setText(tr("Неизвестна!"));
@@ -213,7 +219,6 @@ void rs_main_table::writeRow(int row, relayDesc_t relay)
                 //_items[row].manufactured->setText(manufactured_dt.date().toString("dd.MM.yyyy"));
                 _items[row].manufactured->setText(_locale->toString(manufactured_dt.date(), "dd.MM.yyyy"));
     }
-    */
 	
 	/*Станция*/
 	_items[row].station->setText(_req_server->getStationById(relay.station).station);
@@ -250,21 +255,22 @@ void rs_main_table::writeRow(int row, relayDesc_t relay)
                 _items[row].last_check->setBackground(item(0,0)->background());
     }
 	
-	/*Дата следующей проверки*/
-        if (_check_period == 0){
-	}
-	else if (relay.last_check != 0){
-                //_items[row].next_check->setText(last_check_dt.addYears(_check_period).toString("dd.MM.yyyy"));
-                _items[row].next_check->setText(_locale->toString(last_check_dt.addYears(_check_period).date(), "dd.MM.yyyy"));
-                if (last_check_dt.addYears(_check_period) < QDateTime::currentDateTime())
-                    //&& ((relay.status == RS_STATUS_INSTALL)||(relay.status == RS_STATUS_REPAIR))){
-                {
-                        _items[row].next_check->setBackground(table_warning);
-                    }
-                else{
-                    _items[row].next_check->setBackground(item(0,0)->background());
-                }
-    }
+    /*Дата следующей проверки*/
+        if (_check_period == 0) {
+        }
+        else if (relay.last_check != 0) {
+            //_items[row].next_check->setText(last_check_dt.addYears(_check_period).toString("dd.MM.yyyy"));
+            _items[row].next_check->setText(_locale->toString(last_check_dt.addYears(static_cast<int>(_check_period)).date(), "dd.MM.yyyy"));
+
+            if (last_check_dt.addYears(static_cast<int>(_check_period)) < QDateTime::currentDateTime())
+                //&& ((relay.status == RS_STATUS_INSTALL)||(relay.status == RS_STATUS_REPAIR))){
+            {
+                _items[row].next_check->setBackground(table_warning);
+            }
+            else{
+                _items[row].next_check->setBackground(item(0,0)->background());
+            }
+        }
 	
 	/*Статус*/
 	_items[row].status->setText(_req_server->getStatusById(relay.status).status);
@@ -322,7 +328,7 @@ void rs_main_table::setReadOnly(void)
 	_readOnly = true;
 }
 
-int rs_main_table::_alt_check_period(relayDesc_t &relay)
+uint rs_main_table::_alt_check_period(relayDesc_t &relay)
 {
     QRegExp re(tr("\\((\\d+)\\).*$"));
     int pos=re.indexIn(relay.comment, 0);

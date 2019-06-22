@@ -1,16 +1,17 @@
 #include "rs_main.h"
 
 #include <QFontDatabase>
+#include <QAction>
 
-QAction *authAction;
-QAction *saveAction;
-QAction *queryAction;
-QAction *addAction;
-QAction *historyAction;
-QAction *printAction;
-QAction *settingsAction;
-QAction *quitAction;
-QAction *aboutAction;
+//QAction *authAction;
+//QAction *saveAction;
+//QAction *queryAction;
+//QAction *addAction;
+//QAction *historyAction;
+//QAction *printAction;
+//QAction *settingsAction;
+//QAction *quitAction;
+//QAction *aboutAction;
 
 void rs_main::createToolBar()
 {
@@ -238,7 +239,7 @@ void rs_main::add(void)
 
 void rs_main::history(void)
 {
-	if (table->rowCount() &&  table->item(table->currentRow(), 0) != NULL){
+    if (table->rowCount() &&  table->item(table->currentRow(), 0) != nullptr){
 		rs_history *histWnd = new rs_history(this, _req_server, table->item(table->currentRow(), 0)->text().toUInt());
 		histWnd->exec();
 		delete(histWnd);

@@ -118,7 +118,7 @@ rs_change_dialog::rs_change_dialog(QWidget *parent, dbQueryServer *req_server, u
 	last_check_dt.setTime_t(_relay.last_check);
 	_last_check_ed->setDateTime(last_check_dt);
 	
-	_next_check_ed->setText(last_check_dt.addYears(_req_server->getTypeById(_relay.type).checkPeriod).toString("dd.MM.yyyy"));
+    _next_check_ed->setText(last_check_dt.addYears(static_cast<int>(_req_server->getTypeById(_relay.type).checkPeriod)).toString("dd.MM.yyyy"));
 	
 	for (int i = 0; i < _status.size(); i++){
 		_status_ed->addItem(_status[i].status);

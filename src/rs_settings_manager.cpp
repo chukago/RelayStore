@@ -1,10 +1,10 @@
 #include "rs_settings_manager.h"
 
-rs_settings_manager *rs_settings_manager::_instance = 0;
+rs_settings_manager *rs_settings_manager::_instance = nullptr;
 
 rs_settings_manager *rs_settings_manager::getInstance()
 {
-    if(_instance == 0) {
+    if(_instance == nullptr) {
 
         _instance = new rs_settings_manager();
     }

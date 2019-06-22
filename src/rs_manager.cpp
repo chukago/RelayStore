@@ -2,7 +2,7 @@
 
 /* logic_manager */
 
-logic_manager *logic_manager::_instance = 0;
+logic_manager *logic_manager::_instance = nullptr;
 
 logic_manager::logic_manager()
 {
@@ -10,7 +10,7 @@ logic_manager::logic_manager()
 
 logic_manager *logic_manager::instance()
 {
-    if(_instance == 0)
+    if(_instance == nullptr)
     {
         _instance = new logic_manager;
     }
@@ -45,7 +45,7 @@ QObject* logic_manager::getObject(QString name) const
         }
     }
 
-    return 0;
+    return nullptr;
 }
 
 void logic_manager::setState(LogicManagerState_t state)
